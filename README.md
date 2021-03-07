@@ -6,6 +6,10 @@ To run this app locally on your computer you have to:
 
 -Type: npx create-react-app nyt-app
 
+-Type: npm install axios
+
+-Type: npm install react-bootstrap bootstrap
+
 -Copy the code from src/App.js
 
 -Replace the code in the file with the same name in your Visual Studio Code
