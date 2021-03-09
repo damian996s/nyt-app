@@ -21,6 +21,20 @@ function Articles({ articles }) {
     let keyword = event.target.value;
     setDateMax(keyword);
   }
+  const dateFilter = (article) => {
+    if (dateMin == null || dateMax == null) {
+      return article
+    } else if (dateMin <= article.pub_date.slice(0,10) && dateMax >= article.pub_date.slice(0,10)) {
+      return article
+    }
+  }
+  const searchFilter = (article) => {
+    if (search == null) {
+      return article
+    } else if (article.headline.main.toLowerCase().includes(search.toLowerCase()) || article.pub_date.toLowerCase().includes(search.toLowerCase()) || article.byline.original.toLowerCase().includes(search.toLowerCase()) || article.snippet.toLowerCase().includes(search.toLowerCase())) {
+      return article
+    }
+  }
   let today = new Date(),
     day = today.getDate(),
     month = today.getMonth()+1,
@@ -45,20 +59,8 @@ function Articles({ articles }) {
       <Container className="d-flex flex-row justify-content-around flex-wrap" style={{marginTop:"25px"}}>
         {
             articles
-            .filter((article) => {
-              if (dateMin == null || dateMax == null) {
-                return article
-              } else if (dateMin <= article.pub_date.slice(0,10) && dateMax >= article.pub_date.slice(0,10)) {
-                return article
-              }
-            })
-            .filter((article) => {
-              if (search == null) {
-                return article
-              } else if (article.headline.main.toLowerCase().includes(search.toLowerCase()) || article.pub_date.toLowerCase().includes(search.toLowerCase()) || article.byline.original.toLowerCase().includes(search.toLowerCase()) || article.snippet.toLowerCase().includes(search.toLowerCase())) {
-                return article
-              }
-            })
+            .filter(dateFilter)
+            .filter(searchFilter)
             .map((article) => (            
                 <Article article={article} />   
           )) 
