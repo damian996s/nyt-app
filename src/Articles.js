@@ -3,8 +3,9 @@ import './App.css';
 import { Container } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Article from "./Article"
+import DateInput from "./DateInput"
 
-function Articles({ loading, articles }) {
+function Articles({ articles }) {
   const [dateMin, setDateMin] = useState(null)
   const [dateMax, setDateMax] = useState(null)
   const [search, setSearch] = useState(null)
@@ -20,18 +21,27 @@ function Articles({ loading, articles }) {
     let keyword = event.target.value;
     setDateMax(keyword);
   }
-  console.log(dateMin)
-  console.log(dateMax)
+  let today = new Date(),
+    day = today.getDate(),
+    month = today.getMonth()+1,
+    year = today.getFullYear();
+    if(day < 10){
+      day = '0'+ day
+      }  
+    if(month < 10){
+      month = '0' + month
+      }
+    today = year + '-' + month + '-' + day;
   return (
     <div className="App">
       <header className="App-header">
       <div style={{paddingTop:"20px"}}>
         <label style={{paddingRight:"10px"}}>from</label>
-        <input className="date" type="date" onChange={(e)=>searchMin(e)} style={{backgroundColor:"#282c34", border:"2px solid white", color:"white", width:"190px", outline:"none"}}></input>
+        <DateInput min="2020-01-01" max={dateMax, today} value={dateMin} onChange={(e)=>searchMin(e)} />
         <label style={{padding: "0 10px"}}>to</label>
-      <input className="date" type="date" onChange={(e)=>searchMax(e)} style={{backgroundColor:"#282c34", border:"2px solid white", color:"white", width:"190px", outline:"none"}}></input>  
+        <DateInput min={dateMin} max={today} value={dateMax} onChange={(e)=>searchMax(e)} />
       </div>
-      <input type="text" placeholder="Search..." onChange={(e)=>searchSpace(e)} className="text-input" style={{marginTop:"15px", height:"35px", outline:"none"}} />
+      <input type="text" placeholder="Search..." onChange={(e)=>searchSpace(e)} className="text-input" style={{marginTop:"15px", height:"30px", outline:"none", fontSize:"18px", width:"280px"}} />
       <Container className="d-flex flex-row justify-content-around flex-wrap" style={{marginTop:"25px"}}>
         {
             articles

@@ -5,8 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 function Article({ article }) {
     return (
         <div>
-            {article && (
-                
+            {article && (               
                     <Card id={article._id} style={{width:"350px", height:"520px", marginBottom:"55px"}}>
                         <Card.Img
                         style={{height:"250px"}}
